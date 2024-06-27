@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Welcome to FlaskApp</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="https://via.placeholder.com/300" class="img-fluid" alt="Placeholder Image 1">
+            <h3>Feature 1</h3>
+            <p>Some quick example text to build on the feature and make up the bulk of the content.</p>
+        </div>
+        <div class="col-md-4">
+            <img src="https://via.placeholder.com/300" class="img-fluid" alt="Placeholder Image 2">
+            <h3>Feature 2</h3>
+            <p>Some quick example text to build on the feature and make up the bulk of the content.</p>
+        </div>
+        <div class="col-md-4">
+            <img src="https://via.placeholder.com/300" class="img-fluid" alt="Placeholder Image 3">
+            <h3>Feature 3</h3>
+            <p>Some quick example text to build on the feature and make up the bulk of the content.</p>
+        </div>
+    </div>
+    <h1 class="mt-5">Payment Form</h1>
+        <!-- <form action="{{ url_for('views.make_payment') }}" method="post" class="mt-4">
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="text" class="form-control" id="amount" name="amount" required>
+            </div>
+
+            <div class="form-group">
+                <label for="currency">Currency:</label>
+                <select class="form-control" id="currency" name="currency" required>
+                    <option value="MWK">MWK</option>
+                    <option value="NGN">NGN</option>
+                    <option value="ZAR">ZAR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="USD">USD</option>
+                    <option value="ZMW">ZMW</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Make Payment</button>
+        </form> -->
+        <form>
+            <script src="https://in.paychangu.com/js/popup.js"></script>
+            <div id="wrapper"></div>
+            <button type="button" onClick="makePayment()">Pay Now</button>
+            </form>
+          <script>
+              function makePayment(){
+                PaychanguCheckout({
+                  "public_key": "pub-live-ReM2Wfk8sRdApyozwg46DQlHHCHiXdDf ",
+                  "tx_ref": '' + Math.floor((Math.random() * 1000000000) + 1),
+                  "amount": 1000,
+                  "currency": "MWK",
+                  "callback_url": "https://example.com/callbackurl"",
+                  "return_url": "https://example.com/returnurl",
+                  "customer":{
+                    "email": "yourmail@example.com",
+                    "first_name":"Mac",
+                    "last_name":"Phiri",
+                  },
+                  "customization": {
+                    "title": "Test Payment",
+                    "description": "Payment Description",
+                  },
+                  "meta": {
+                    "uuid": "uuid",
+                    "response": "Response"
+                  }
+                });
+              }
+              </script>
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Explore{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Purchase</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+        /* Add custom styles here if needed */
+    </style>
+</head>
+<body>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Product Purchase</h1>
+        <div class="row" id="productCards">
+            <!-- Product Cards will be dynamically added here -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Payment Details -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Payment details will be displayed here -->
+                <div id="paymentDetails"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to handle product cards and modal -->
+<script>
+    // Sample product data (replace with actual product data)
+    var products = [
+        {
+            id: 1,
+            image: "{{ url_for('static', filename='img/shoe_product_picture (1).jpeg') }}",
+            description: "Product A description",
+            price: "$100"
+        },
+        {
+            id: 2,
+            image: "{{ url_for('static', filename='img/shoe_product_picture (2).jpeg') }}",
+            description: "Product B description",
+            price: "$150"
+        },
+        {
+            id: 3,
+            image: "{{ url_for('static', filename='img/shoe_product_picture (3).jpeg') }}",
+            description: "Product C description",
+            price: "$200"
+        }
+    ];
+
+    // Function to generate product cards dynamically
+    function generateProductCards() {
+        var productCards = '';
+
+        products.forEach(function(product) {
+            productCards += `
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="${product.image}" class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.description}</h5>
+                            <p class="card-text">Price: ${product.price}</p>
+                            <button type="button" class="btn btn-primary" onclick="showPaymentModal(${product.id})">Purchase</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        $('#productCards').html(productCards);
+    }
+
+    // Show payment modal function
+    function showPaymentModal(productId) {
+        // Retrieve product details based on productId (not implemented in sample)
+        var selectedProduct = products.find(product => product.id === productId);
+
+        // Display product details in the modal
+        var modalBody = `
+            <p><strong>Product:</strong> ${selectedProduct.description}</p>
+            <p><strong>Price:</strong> ${selectedProduct.price}</p>
+            <hr>
+            <form method="POST" action="{{ url_for('views.make_payment') }}">
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="text" id="amount" class="form-control" name="amount" value="${selectedProduct.price}" readonly>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="firstname">First Name:</label>
+                        <input type="text" id="firstname" class="form-control" name="first_name" required>
+                    </div>
+                    <div class="col">
+                        <label for="lastname">Last Name:</label>
+                        <input type="text" id="lastname" class="form-control" name="last_name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" class="form-control" name="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Pay Now</button>
+            </form>
+        `;
+
+        $('#paymentDetails').html(modalBody);
+        $('#paymentModal').modal('show'); // Show the modal
+    }
+
+    // Call function to generate initial product cards
+    $(document).ready(function() {
+        generateProductCards();
+    });
+</script>
+
+</body>
+</html>
+
+{% endblock %}
