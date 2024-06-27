@@ -10,8 +10,13 @@ This Flask-based e-commerce application allows users to browse products, make pu
 ## Features
 
 User Registration and Login
+
 Product Browsing with Images, Descriptions, and Prices
+
 Payment Processing
+
 Transaction Verification
+
 Frontend Notification on Successful Transaction
+
 run pip install -r requirements.txt to install the neccessary packages
