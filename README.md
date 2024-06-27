@@ -1,13 +1,13 @@
 # paychanguIntegrationWithPythonFlaskBackend
 
 
-##Flask E-commerce Application
+## Flask E-commerce Application
 
-##Overview
+## Overview
 
 This Flask-based e-commerce application allows users to browse products, make purchases, and receive transaction notifications. The system processes payment data, verifies transactions, and notifies the user upon successful payment.
 
-##Features
+## Features
 
 User Registration and Login
 Product Browsing with Images, Descriptions, and Prices
