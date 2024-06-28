@@ -70,8 +70,22 @@ def make_payment():
     # Print the response text from the API (for debugging purposes)
     print(response.text)
 
-    # Flash a success message to be displayed on the redirected page
-    flash('transaction created succesfully! thank you for shopping with us', category='success')
+   # Parse the response as JSON
+    response_data = response.json()
+
+   # i added this algorithim to check status of the transaction to improve transparency
+   # Access the fields of the JSON object
+    field1 = response_data.get('message')
+    field2 = response_data.get('status')
+
+    print(field1)
+    print(field2)
+    if field2 == 'success':
+        # Flash a success message to be displayed on the redirected page
+        flash('transaction created succesfully! thank you for shopping with us', category='success')
+    if field2 == 'failed':
+       # Flash a failed message to be displayed on the redirected page
+        flash(field1, category='error') 
 
     # Redirect the user back to the home page after the payment is processed
     return redirect(url_for('views.explore'))
