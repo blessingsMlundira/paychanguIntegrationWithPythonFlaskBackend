@@ -85,8 +85,8 @@ def make_payment():
     print(field1)
     print(field2)
     if field2 == 'success':
+        print("successful transaction : ")
         print("printing data : ")
-        print(field3['checkout_url'])
         print(payload)
         
         # Flash a success message to be displayed on the redirected page
@@ -97,6 +97,6 @@ def make_payment():
         print("failed transaction : ")
         print(payload)
 
-    # Redirect the user back to the home page after the payment is processed
+    # Redirect the user to checkout url
     return redirect(field3['checkout_url'])
     
