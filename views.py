@@ -33,7 +33,7 @@ def make_payment():
     last_name = request.form.get('last_name')
    
     # Generate a random integer between 1 and 100
-    random_number = random.randint(1, 1000)
+    random_number = random.randint(1, 10000)
 
     str_int = str(random_number)
 
@@ -53,7 +53,8 @@ def make_payment():
         "email": email,
         "first_name": first_name,
         "last_name": last_name,
-        "callback_url": "https://webhook.site/7b8f24bd-80a5-4bc1-863a-f636549f6221",
+        "callback_url": "http://127.0.0.1:5000/explore",
+        
         "tx_ref": str_int
     }
 
@@ -66,27 +67,36 @@ def make_payment():
 
     # Send POST request to the payment API with payload and headers
     response = requests.post(url, json=payload, headers=headers)
+   
+    # for request in response.json()['data']:
+    #     print(request)
 
     # Print the response text from the API (for debugging purposes)
+    print("printing response")
     print(response.text)
-
-   # Parse the response as JSON
+    # Parse the response as JSON
     response_data = response.json()
 
-   # i added this algorithim to check status of the transaction to improve transparency
-   # Access the fields of the JSON object
+    # Access the fields of the JSON object
     field1 = response_data.get('message')
     field2 = response_data.get('status')
+    field3 = response_data.get('data')
 
     print(field1)
     print(field2)
     if field2 == 'success':
+        print("printing data : ")
+        print(field3['checkout_url'])
+        print(payload)
+        
         # Flash a success message to be displayed on the redirected page
         flash('transaction created succesfully! thank you for shopping with us', category='success')
     if field2 == 'failed':
-       # Flash a failed message to be displayed on the redirected page
-        flash(field1, category='error') 
+       # Flash a success message to be displayed on the redirected page
+        flash(field1, category='error')
+        print("failed transaction : ")
+        print(payload)
 
     # Redirect the user back to the home page after the payment is processed
-    return redirect(url_for('views.explore'))
+    return redirect(field3['checkout_url'])
     
